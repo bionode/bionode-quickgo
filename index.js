@@ -1,1 +1,1 @@
-module.exports = require('./src/obo.js')
+module.exports = require('./src/quickgo.js')

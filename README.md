@@ -11,6 +11,8 @@ Access EBI QuickGO REST API with promises and streams.
     * _static_
         * [.GAnnotationAsync(fields)](#module_bionode-quickgo.GAnnotationAsync) ⇒ <code>Promise</code>
         * [.GAnnotation(fields)](#module_bionode-quickgo.GAnnotation) ⇒ <code>Stream</code>
+        * [.GTerm(fields)](#module_bionode-quickgo.GTerm) ⇒ <code>Stream</code>
+        * [.GTermAsync(fields)](#module_bionode-quickgo.GTermAsync) ⇒ <code>Promise</code>
     * _inner_
         * [~format](#module_bionode-quickgo..format) : <code>String</code>
         * [~limit](#module_bionode-quickgo..limit) : <code>String</code>
@@ -29,6 +31,8 @@ Access EBI QuickGO REST API with promises and streams.
         * [~db](#module_bionode-quickgo..db) : <code>String</code>
         * [~q](#module_bionode-quickgo..q) : <code>String</code>
         * [~col](#module_bionode-quickgo..col) : <code>String</code>
+        * [~id](#module_bionode-quickgo..id) : <code>String</code>
+        * [~format](#module_bionode-quickgo..format) : <code>String</code>
 
 <a name="module_bionode-quickgo.GAnnotationAsync"></a>
 ### bionode-quickgo.GAnnotationAsync(fields) ⇒ <code>Promise</code>
@@ -49,6 +53,26 @@ QuickGO Annotation service
 | Param | Type | Description |
 | --- | --- | --- |
 | fields | <code>Object</code> | valid query fields |
+
+<a name="module_bionode-quickgo.GTerm"></a>
+### bionode-quickgo.GTerm(fields) ⇒ <code>Stream</code>
+GO term information
+
+**Kind**: static method of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fields | <code>Object</code> | valid query fields, id required |
+
+<a name="module_bionode-quickgo.GTermAsync"></a>
+### bionode-quickgo.GTermAsync(fields) ⇒ <code>Promise</code>
+GO term information
+
+**Kind**: static method of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fields | <code>Object</code> | valid query fields, id required |
 
 <a name="module_bionode-quickgo..format"></a>
 ### bionode-quickgo~format : <code>String</code>
@@ -267,6 +291,26 @@ of columns is shown in bold text.
 ```js
 'proteinDB,proteinID,goID,goName,aspect'
 ```
+<a name="module_bionode-quickgo..id"></a>
+### bionode-quickgo~id : <code>String</code>
+GO identifier
+
+**Kind**: inner property of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+**Default**: <code>none</code>  
+**Example**  
+```js
+GO:0003824
+```
+<a name="module_bionode-quickgo..format"></a>
+### bionode-quickgo~format : <code>String</code>
+| Format                                                                   | Description                                                       |
+|:-------------------------------------------------------------------------|:------------------------------------------------------------------|
+| [mini](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0003824&format=mini)     | Mini Mini HTML, suitable for dynamically embedding in popup boxes |
+| [obo](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0003824&format=obo)       | OBO format snippet                                                |
+| [oboxml](http://www.ebi.ac.uk/QuickGO/GTerm?id=GO:0003824&format=oboxml) | OBO XML format snippet                                            |
+
+**Kind**: inner property of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+**Default**: <code>obo</code>  
 
 ## License
 
