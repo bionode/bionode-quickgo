@@ -10,7 +10,8 @@ let cli = commandLineArgs([
   {name: 'gannotation', alias: 'a', type: Boolean},
   {name: 'gterm', alias: 't', type: Boolean},
   {name: 'goid', type: String},
-  {name: 'format', type: String}
+  {name: 'format', type: String},
+  {name: 'col', type: String}
 ])
 
 const opts = cli.parse()

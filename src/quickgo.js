@@ -223,7 +223,7 @@ function annotationRequest(fields) {
    * @default 'proteinDB,proteinID,proteinSymbol,qualifier,goID,goName,aspect,evidence,ref,with,proteinTaxon,date,from,splice'
    * @example 'proteinDB,proteinID,goID,goName,aspect'
    */
-  const col = fields.col || ''
+  const col = fields.col || 'proteinDB,proteinID,proteinSymbol,qualifier,goID,goName,aspect,evidence,ref,with,proteinTaxon,date,from,splice'
 
   const form = {
     format,
