@@ -33,6 +33,8 @@ Access EBI QuickGO REST API with promises and streams.
         * [~col](#module_bionode-quickgo..col) : <code>String</code>
         * [~id](#module_bionode-quickgo..id) : <code>String</code>
         * [~format](#module_bionode-quickgo..format) : <code>String</code>
+        * [~annotationRequest(fields)](#module_bionode-quickgo..annotationRequest) ⇒ <code>Object</code>
+        * [~termRequest(fields)](#module_bionode-quickgo..termRequest) ⇒ <code>Object</code>
 
 <a name="module_bionode-quickgo.GAnnotationAsync"></a>
 ### bionode-quickgo.GAnnotationAsync(fields) ⇒ <code>Promise</code>
@@ -311,6 +313,28 @@ GO:0003824
 
 **Kind**: inner property of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
 **Default**: <code>obo</code>  
+<a name="module_bionode-quickgo..annotationRequest"></a>
+### bionode-quickgo~annotationRequest(fields) ⇒ <code>Object</code>
+generate an annotation request object
+
+**Kind**: inner method of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+**Returns**: <code>Object</code> - {{method, uri, form} object for request}  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fields | <code>Object</code> | valid query fields |
+
+<a name="module_bionode-quickgo..termRequest"></a>
+### bionode-quickgo~termRequest(fields) ⇒ <code>Object</code>
+generate an term request object
+
+**Kind**: inner method of <code>[bionode-quickgo](#module_bionode-quickgo)</code>  
+**Returns**: <code>Object</code> - {{method, uri, form} object for request}  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| fields | <code>Object</code> | valid query fields |
+
 
 ## License
 

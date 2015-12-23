@@ -12,6 +12,11 @@ const requestAsync = require('request-promise')
 const baseUri = 'http://www.ebi.ac.uk/QuickGO/'
 const method = 'POST'
 
+/**
+ * generate an annotation request object
+ * @param  {Object} fields valid query fields
+ * @return {Object}        {method, uri, form} object for request
+ */
 function annotationRequest(fields) {
   const uri = baseUri + 'GAnnotation'
 
@@ -265,6 +270,11 @@ exports.GAnnotation = function (fields) {
   return request(annotationRequest(fields))
 }
 
+/**
+ * generate an term request object
+ * @param  {Object} fields valid query fields
+ * @return {Object}        {method, uri, form} object for request
+ */
 function termRequest(fields) {
   const uri = baseUri + 'GTerm'
 
