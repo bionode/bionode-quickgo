@@ -7,6 +7,9 @@
     "test": "mocha test/obo.spec.js",
     "docs": "jsdoc2md --template docs/README.hbs src/*.js > README.md && jsdoc src/*.js -d docs"
   },
+  "bin": {
+    "bionode-quickgo": "src/cli.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thejmazz/bionode-quickgo.git"
