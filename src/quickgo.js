@@ -1,8 +1,7 @@
 'use strict'
 
-// const Promise = require('bluebird')
+const request = require('request')
 const requestAsync = require('request-promise')
-
 
 /**
  * Access EBI QuickGO REST API with promises and streams.
@@ -13,12 +12,7 @@ const requestAsync = require('request-promise')
 const baseUri = 'http://www.ebi.ac.uk/QuickGO/'
 const method = 'POST'
 
-/**
- * QuickGO Annotation serice
- * @param {Object} fields valid query fields
- * @return {Promise}
- */
-exports.GAnnotation = function (fields) {
+function annotationRequest(fields) {
   const uri = baseUri + 'GAnnotation'
 
   /**
@@ -238,48 +232,35 @@ exports.GAnnotation = function (fields) {
     source,
     ref,
     with: _with,
-    tax,
-    protein,
-    qualifier,
-    db,
-    q,
-    col
+      tax,
+      protein,
+      qualifier,
+      db,
+      q,
+      col
   }
 
-  return requestAsync({
+  return {
     method,
     uri,
     form
-  })
+  }
 }
 
-// const opts = {
-//   method: 'POST',
-//   uri: 'http://www.ebi.ac.uk/QuickGO/GAnnotation',
-//   form: {
-//     a: '',
-//     goid: 'GO:0047497',
-//     termUse: 'ancestor',
-//     relType: 'IPO=',
-//     customRelType: 'IPOR+-?=',
-//     protein: '',
-//     tax: '',
-//     qualifier: '',
-//     ref: '',
-//     evidence: '',
-//     with: '',
-//     source: '',
-//     q: '',
-//     col: 'proteinDB,proteinID,proteinSymbol,qualifier,goID,goName,aspect,evidence,ref,with,proteinTaxon,date,from,splice',
-//     select: 'normal',
-//     start: '0',
-//     count: '25',
-//     format: 'gaf',
-//     gz: 'false',
-//     limit: ''
-//   }
-// }
-//
-// rp(opts)
-//   .then((body) => console.log(body))
-//   .catch((err) => console.error(err))
+/**
+ * QuickGO Annotation service
+ * @param {Object} fields valid query fields
+ * @return {Promise}
+ */
+exports.GAnnotationAsync = function (fields) {
+  return requestAsync(annotationRequest(fields))
+}
+
+/**
+ * QuickGO Annotation service
+ * @param {Object} fields valid query fields
+ * @return {Stream}
+ */
+exports.GAnnotation = function (fields) {
+  return request(annotationRequest(fields))
+}

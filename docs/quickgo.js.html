@@ -28,9 +28,8 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict'
 
-const Promise = require('bluebird')
-const rp = require('request-promise')
-
+const request = require('request')
+const requestAsync = require('request-promise')
 
 /**
  * Access EBI QuickGO REST API with promises and streams.
@@ -41,7 +40,7 @@ const rp = require('request-promise')
 const baseUri = 'http://www.ebi.ac.uk/QuickGO/'
 const method = 'POST'
 
-exports.GAnnotation = function (fields) {
+function annotationRequest(fields) {
   const uri = baseUri + 'GAnnotation'
 
   /**
@@ -51,7 +50,7 @@ exports.GAnnotation = function (fields) {
    * @default gaf
    * @example gaf, gpa, gene2go, proteinList, fasta, tsv
    */
-  const format = 'gaf'
+  const format = fields.format || 'gaf'
 
   /**
    * @name limit
@@ -63,7 +62,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example 9001, -1
    */
-  const limit = ''
+  const limit = fields.limit || ''
 
   /**
    * @name gz
@@ -72,7 +71,7 @@ exports.GAnnotation = function (fields) {
    * @default false
    * @example false, true
    */
-  const gz = 'false'
+  const gz = fields.gz || 'false'
 
   /**
    * @name goid
@@ -82,7 +81,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example GO:0002080
    */
-  const goid = ''
+  const goid = fields.goid || ''
 
   /**
    * @name aspect
@@ -92,7 +91,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example F, P, C
    */
-  const aspect = ''
+  const aspect = fields.espect || ''
 
   /**
    * @name relType
@@ -112,7 +111,7 @@ exports.GAnnotation = function (fields) {
    * + (positively_regulates)
    * - (negatively_regulates)
    */
-  const relType = 'IPO='
+  const relType = fields.relType || 'IPO='
 
   /**
    * @name termUse
@@ -125,7 +124,7 @@ exports.GAnnotation = function (fields) {
    * @default ancestor
    * @example ancestor, slim
    */
-  const termUse = 'ancestor'
+  const termUse = fields.termUse || 'ancestor'
 
   /**
    * @name evidence
@@ -134,7 +133,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example IDA, IC, ISS, IEA
    */
-  const evidence = ''
+  const evidence = fields.evidence || ''
 
   /**
    * @name source
@@ -143,7 +142,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example UniProtKB, HGNC
    */
-  const source = ''
+  const source = fields.source || ''
 
   /**
    * @name ref
@@ -153,7 +152,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example PUBMED:*, GO_REF:0000002, 16262699
    */
-  const ref = ''
+  const ref = fields.ref || ''
 
   /**
    * @name with
@@ -166,7 +165,8 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example EC:2.5.1.30, IPR000092, HAMAP:*
    */
-  const _with = ''
+  // jsdoc3 throws 'unexpected token with' on 'with'
+  const _with = fields.with || ''
 
   /**
    * @name tax
@@ -175,7 +175,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example 9606
    */
-  const tax = ''
+  const tax = fields.tax || ''
 
   /**
    * @name protein
@@ -185,7 +185,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example Mm.363225, P99999
    */
-  const protein = ''
+  const protein = fields.protein || ''
 
   /**
    * @name qualifier
@@ -194,7 +194,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example NOT, colocalizes_with, contributes_to
    */
-  const qualifier = ''
+  const qualifier = fields.qualifier || ''
 
   /**
    * @name db
@@ -203,7 +203,7 @@ exports.GAnnotation = function (fields) {
    * @default ''
    * @example UniProtKB, UniGene, Ensembl
    */
-  const db = ''
+  const db = fields.db || ''
 
   /**
    * @name q
@@ -212,7 +212,7 @@ exports.GAnnotation = function (fields) {
    * @type {String}
    * @default ''
    */
-  const q = ''
+  const q = fields.q || ''
 
   /**
    * @name col
@@ -225,39 +225,73 @@ exports.GAnnotation = function (fields) {
    * * [**proteinDB**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinDB)
    * * [**proteinID**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinID)
    * * [**proteinSymbol**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinSymbol)
+   * * [**qualifier**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-qualifier)
+   * * [**goID**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-goID)
+   * * [**goName**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-goName)
+   * * [**aspect**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-aspect)
+   * * [**evidence**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-evidence)
+   * * [**ref**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-ref)
+   * * [**with**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-with)
+   * * [**proteinTaxon**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinTaxon)
+   * * [**date**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-date)
+   * * [**from**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-from)
+   * * [**splice**](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-splice)
+   * * [proteinName](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinName)
+   * * [proteinSynonym](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinSynonym)
+   * * [proteinType](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinType)
+   * * [proteinTaxonName](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-proteinTaxonName)
+   * * [orginalTermID](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-originalTermID)
+   * * [originalGOName](http://www.ebi.ac.uk/QuickGO/reference.html#annotation-column-originalGOName)
+   * @type {String}
+   * @default 'proteinDB,proteinID,proteinSymbol,qualifier,goID,goName,aspect,evidence,ref,with,proteinTaxon,date,from,splice'
+   * @example 'proteinDB,proteinID,goID,goName,aspect'
    */
-}
+  const col = fields.col || ''
 
-const opts = {
-  method: 'POST',
-  uri: 'http://www.ebi.ac.uk/QuickGO/GAnnotation',
-  form: {
-    a: '',
-    goid: 'GO:0047497',
-    termUse: 'ancestor',
-    relType: 'IPO=',
-    customRelType: 'IPOR+-?=',
-    protein: '',
-    tax: '',
-    qualifier: '',
-    ref: '',
-    evidence: '',
-    with: '',
-    source: '',
-    q: '',
-    col: 'proteinDB,proteinID,proteinSymbol,qualifier,goID,goName,aspect,evidence,ref,with,proteinTaxon,date,from,splice',
-    select: 'normal',
-    start: '0',
-    count: '25',
-    format: 'gaf',
-    gz: 'false',
-    limit: ''
+  const form = {
+    format,
+    limit,
+    gz,
+    goid,
+    aspect,
+    relType,
+    termUse,
+    evidence,
+    source,
+    ref,
+    with: _with,
+      tax,
+      protein,
+      qualifier,
+      db,
+      q,
+      col
+  }
+
+  return {
+    method,
+    uri,
+    form
   }
 }
 
-rp(opts)
-  .then((body) => console.log(body))
-  .catch((err) => console.error(err))
+/**
+ * QuickGO Annotation service
+ * @param {Object} fields valid query fields
+ * @return {Promise}
+ */
+exports.GAnnotationAsync = function (fields) {
+  return requestAsync(annotationRequest(fields))
+}
+
+/**
+ * QuickGO Annotation service
+ * @param {Object} fields valid query fields
+ * @return {Stream}
+ */
+exports.GAnnotation = function (fields) {
+  return request(annotationRequest(fields))
+}
 </code></pre>
         </article>
     </section>
@@ -274,7 +308,7 @@ rp(opts)
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Dec 22 2015 19:36:40 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Tue Dec 22 2015 20:30:43 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>
