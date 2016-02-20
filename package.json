@@ -1,6 +1,6 @@
 {
   "name": "bionode-quickgo",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Access EBI QuickGO REST API with promises and streams",
   "main": "index.js",
   "scripts": {
@@ -12,14 +12,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thejmazz/bionode-quickgo.git"
+    "url": "git+https://github.com/bionode/bionode-quickgo.git"
   },
   "author": "Julian Mazzitelli <mazzitell.julian@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thejmazz/bionode-quickgo/issues"
+    "url": "https://github.com/bionode/bionode-quickgo/issues"
   },
-  "homepage": "https://github.com/thejmazz/bionode-quickgo#readme",
+  "homepage": "https://github.com/bionode/bionode-quickgo#readme",
   "devDependencies": {
     "chai": "^3.4.1"
   },
